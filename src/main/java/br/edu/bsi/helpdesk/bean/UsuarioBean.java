@@ -2,14 +2,16 @@ package br.edu.bsi.helpdesk.bean;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
+	import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
+import br.edu.bsi.helpdesk.dao.FuncionarioDAO;
 import br.edu.bsi.helpdesk.dao.UsuarioDAO;
+import br.edu.bsi.helpdesk.domain.Funcionario;
 import br.edu.bsi.helpdesk.domain.Usuario;
 
 @SuppressWarnings("serial")
@@ -17,8 +19,25 @@ import br.edu.bsi.helpdesk.domain.Usuario;
 @ViewScoped
 public class UsuarioBean implements Serializable{
 
-	Usuario usuario;
-	List <Usuario> usuarios;
+	private Usuario usuario;
+	private List <Usuario> usuarios;
+	private List <Funcionario> funcionarios;
+
+	public List<Funcionario> getFuncionarios() {
+		return funcionarios;
+	}
+
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -28,8 +47,16 @@ public class UsuarioBean implements Serializable{
 		this.usuario = usuario;
 	}
 	
-	public void novo() {	
-		usuario = new Usuario();
+	public void novo() {
+		try{
+			usuario = new Usuario();
+			FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+			funcionarios = funcionarioDAO.listar();
+		}catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Ocorreu um erro ao gerar um novo usuario");
+			erro.printStackTrace();
+		}
+		
 }
 @PostConstruct
 public void listar() {
@@ -48,6 +75,11 @@ public void salvar(){
 		usuarioDAO.salvar(usuario);
 
 		usuario = new Usuario();
+		
+		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+		
+		funcionarios = funcionarioDAO.listar();
+		
 		usuarios = usuarioDAO.listar();
 
 		Messages.addGlobalInfo("Usuario salvo com sucesso");
