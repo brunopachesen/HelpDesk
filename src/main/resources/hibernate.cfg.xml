@@ -34,6 +34,8 @@
 		<property name="hbm2ddl.auto">validate</property>
 		<!-- Mapeamento das entidades -->
 		<mapping class="br.edu.bsi.helpdesk.domain.Funcionario"/>
+		<mapping class="br.edu.bsi.helpdesk.domain.Usuario"/>
+		<mapping class="br.edu.bsi.helpdesk.domain.Suporte"/>
 
 		
 		
