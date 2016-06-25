@@ -36,6 +36,7 @@
 		<mapping class="br.edu.bsi.helpdesk.domain.Funcionario"/>
 		<mapping class="br.edu.bsi.helpdesk.domain.Usuario"/>
 		<mapping class="br.edu.bsi.helpdesk.domain.Suporte"/>
+		<mapping class="br.edu.bsi.helpdesk.domain.Chamado"/>
 
 		
 		
