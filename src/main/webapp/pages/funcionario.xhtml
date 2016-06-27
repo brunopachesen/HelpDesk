@@ -72,31 +72,31 @@
 			<h:panelGrid id="painel" columns="2">
 				<p:outputLabel value="Nome:" />
 				<p:inputText maxlength="50" size="30"
-					value="#{funcionarioBean.funcionario.nome}" />
+					value="#{funcionarioBean.funcionario.nome}"  required ="true" requiredMessage = "Campo 'Nome' não preenchido" />
 
 				<p:outputLabel value="CPF:" />
-				<p:inputText maxlength="15" size="10"
-					value="#{funcionarioBean.funcionario.cpf}" />
-					
+				<p:inputMask id="cpf" value="#{funcionarioBean.funcionario.cpf}"
+					mask="999.999.999-99" required ="true" requiredMessage = "Campo 'CPF' não preenchido" />
+						
 				<p:outputLabel value="Email:" />
-				<p:inputText maxlength="50" size="10"
-					value="#{funcionarioBean.funcionario.email}" />
+				<p:inputText maxlength="50" size="20"
+					value="#{funcionarioBean.funcionario.email}" required ="true" requiredMessage = "Campo 'Email' não preenchido" />
 					
 				<p:outputLabel value="Telefone:" />
-				<p:inputText maxlength="15" size="10"
-					value="#{funcionarioBean.funcionario.telefone}" />
-					
+				<p:inputMask id="phone" value="#{funcionarioBean.funcionario.telefone}"
+					mask="(99) 9999-9999" required ="true" requiredMessage = "Campo 'Telefone' não preenchido" />	
+				
 				<p:outputLabel value="Setor:" />
-				<p:inputText maxlength="50" size="10"
-					value="#{funcionarioBean.funcionario.setor}" />
+				<p:inputText maxlength="50" size="20"
+					value="#{funcionarioBean.funcionario.setor}" required ="true" requiredMessage = "Campo 'Setor' não preenchido" />
 					
 				<p:outputLabel value="Login:" />
-				<p:inputText maxlength="50" size="10"
-					value="#{funcionarioBean.funcionario.login}" />
+				<p:inputText maxlength="50" size="20"
+					value="#{funcionarioBean.funcionario.login}" required ="true" requiredMessage = "Campo 'Login' não preenchido"/>
 					
 				<p:outputLabel value="Senha:" />
-				<p:inputText maxlength="50" size="10"
-					value="#{funcionarioBean.funcionario.senha}" />
+				<p:inputText maxlength="50" size="20"
+					value="#{funcionarioBean.funcionario.senha}" required ="true" requiredMessage = "Campo 'Senha' não preenchido"/>
 				
 
 			</h:panelGrid>

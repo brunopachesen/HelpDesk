@@ -67,7 +67,7 @@
 				
 				<p:outputLabel value="Funcionario:" />
 				<p:selectOneMenu filter="true" value="#{suporteBean.suporte.funcionario}"
-					converter="omnifaces.SelectItemsConverter">
+					converter="omnifaces.SelectItemsConverter" required = "true" requiredMessage = "Funcionario não selecionado">
 					<f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionario" />
 					<f:selectItems value="#{suporteBean.funcionarios}" var="funcionario"
 						itemValue="#{funcionario}" itemLabel="#{funcionario.nome} - #{funcionario.cpf}" />

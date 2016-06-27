@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 public class Suporte extends GenericDomain  {
 
 	@OneToOne
-	@JoinColumn(nullable = false)
+	@JoinColumn(nullable = false, unique = true)
 	private Funcionario funcionario;
 
 	public Funcionario getFuncionario() {

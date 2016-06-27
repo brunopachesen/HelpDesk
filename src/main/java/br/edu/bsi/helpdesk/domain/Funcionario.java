@@ -10,19 +10,19 @@ public class Funcionario extends GenericDomain{
 	@Column(length = 50, nullable = false)
 	private String nome;
 	
-	@Column(length = 50, nullable = false)
+	@Column(length = 50, nullable = false, unique = true)
 	private String email;
 
-	@Column(length = 15, nullable = false)
+	@Column(length = 15, nullable = false, unique = true)
 	private String telefone;
 	
-	@Column(length = 15, nullable = false)
+	@Column(length = 15, nullable = false, unique = true)
 	private String cpf;
 	
 	@Column(length = 50, nullable = false)
 	private String setor;
 	
-	@Column(length = 50, nullable = false)
+	@Column(length = 50, nullable = false, unique = true)
 	private String login;
 	
 	@Column(length = 50, nullable = false)
