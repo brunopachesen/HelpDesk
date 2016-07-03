@@ -27,7 +27,10 @@ public class Funcionario extends GenericDomain{
 	
 	@Column(length = 50, nullable = false)
 	private String senha;
-
+	
+	@Column(nullable = false)
+	private int tipo;
+	
 	public String getNome() {
 		return nome;
 	}
@@ -83,6 +86,23 @@ public class Funcionario extends GenericDomain{
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
+	public int getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
 	
+	public String conversao(){
+		String tipo = null;
+		if(getTipo() == 1){
+			tipo = "Suporte";
+		}else{
+			tipo = "Usuario";
+		}
+		return tipo;
+	}
 	
 }

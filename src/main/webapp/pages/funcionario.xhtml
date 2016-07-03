@@ -39,6 +39,10 @@
 					<h:outputText value="#{funcionario.setor}" />
 				</p:column>
 				
+				<p:column headerText="Tipo" sortBy="#{funcionario.tipo}">
+					<h:outputText value="#{funcionario.conversao()}" />
+				</p:column>
+				
 				<p:column headerText="Opções">
 					<p:commandButton icon="ui-icon-trash"
 						actionListener="#{funcionarioBean.excluir}"
@@ -95,16 +99,20 @@
 					value="#{funcionarioBean.funcionario.login}" required ="true" requiredMessage = "Campo 'Login' não preenchido"/>
 					
 				<p:outputLabel value="Senha:" />
-				<p:inputText maxlength="50" size="20"
+				<p:password id="senha"
 					value="#{funcionarioBean.funcionario.senha}" required ="true" requiredMessage = "Campo 'Senha' não preenchido"/>
 				
-
+				<p:outputLabel for="tipo" value="Tipo:" />
+        		<p:selectOneRadio id="tipo" value="#{funcionarioBean.funcionario.tipo}">
+            		<f:selectItem itemLabel="Suporte" itemValue="1" />
+            		<f:selectItem itemLabel="Usuario" itemValue="2" />
+        		</p:selectOneRadio>
 			</h:panelGrid>
 
 			<h:panelGrid columns="2">
 				<p:commandButton value="Salvar"
 					actionListener="#{funcionarioBean.salvar}"
-					update=":mensagem :formCadastro:painel :formListagem:tabela" />
+					update=":mensagem :formCadastro:painel :formListagem:tabela" oncomplete="PF('dialogo').hide();"/>
 				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 			</h:panelGrid>
 		</h:form>
