@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Chamado</title>
+</h:head>
+<h:body>
+	<p:layoutUnit>
+		<ui:include src="/templates/Menu.xhtml"/>
+	</p:layoutUnit>
+	<p:growl id="mensagem" />
+
+	<h:form id="formListagem">
+								
+								<!-- Listagem do Usuario -->
+								
+								
+		<p:panel header="Chamado - Listagem - Usuario">
+			<p:dataTable id="tabelaUsuario" emptyMessage="Nenhum registro encontrado."
+				paginator="true" value="#{chamadoBean.chamados}" var="chamado" rows="5">
+				<f:facet name="header">
+					<p:commandButton value="Abrir Chamado" oncomplete="PF('abrirChamado').show();"
+						actionListener="#{chamadoBean.novo}" update=":formAbrirChamado:painel" />
+				</f:facet>
+				
+				<p:column headerText="Código" sortBy="#{chamado.codigo}"
+					filterBy="#{chamado.codigo}">
+					<h:outputText value="#{chamado.codigo}" />
+				</p:column>
+				
+				<p:column headerText="Natureza" sortBy="#{chamado.natureza}"
+					filterBy="#{chamado.natureza}">
+					<h:outputText value="#{chamado.natureza}" />
+				</p:column>
+
+				<p:column headerText="Status" sortBy="#{chamado.conversao()}"
+					filterBy="#{chamado.conversao()}">
+					<h:outputText value="#{chamado.conversao()}" />
+				</p:column>
+				
+				<p:column headerText="Data Abertura" sortBy="#{chamado.dataAbertura}"
+					filterBy="#{chamado.dataAbertura}">
+					<h:outputText value="#{chamado.dataAbertura}" />
+				</p:column>
+				
+				<p:column headerText="Opções">
+					<p:commandButton value = "Visualizar"
+						actionListener="#{chamadoBean.encerrar}"
+						update=":formVisualizarUsuario" style="font-size: 15px"
+						oncomplete="PF('visualizarUsuario').show();" >
+						<f:attribute name="chamadoSelecionado" value="#{chamado}" />
+					</p:commandButton>
+
+				
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</p:panel>
+								<!-- Listagem do Suporte -->
+								
+								
+		<p:panel header="Chamado - Listagem - Suporte">
+			<p:dataTable id="tabelaSuporte" emptyMessage="Nenhum registro encontrado."
+				paginator="true" value="#{chamadoBean.chamados}" var="chamado" rows="5">
+				<f:facet name="header">
+					
+				</f:facet>
+				
+				<p:column headerText="Código" sortBy="#{chamado.codigo}"
+					filterBy="#{chamado.codigo}">
+					<h:outputText value="#{chamado.codigo}" />
+				</p:column>
+				
+				<p:column headerText="Natureza" sortBy="#{chamado.natureza}"
+					filterBy="#{chamado.natureza}">
+					<h:outputText value="#{chamado.natureza}" />
+				</p:column>
+
+				<p:column headerText="Status" sortBy="#{chamado.conversao()}"
+					filterBy="#{chamado.conversao()}">
+					<h:outputText value="#{chamado.conversao()}" />
+				</p:column>
+				
+				<p:column headerText="Data Abertura" sortBy="#{chamado.dataAbertura}"
+					filterBy="#{chamado.dataAbertura}">
+					<h:outputText value="#{chamado.dataAbertura}" />
+				</p:column>
+				
+				<p:column headerText="Manutenção" columns="2">
+
+					<p:commandButton value = "Visualizar"
+						actionListener="#{chamadoBean.editar}"
+						update=":formVisualizarSuporte:painel" style="font-size: 15px"
+						oncomplete="PF('visualizar').show();" >
+						<f:attribute name="chamadoSelecionado" value="#{chamado}" />
+					</p:commandButton>
+					
+					<p:commandButton value = "Responder"
+						update=":formResponder:painel"
+						oncomplete="PF('responder').show();" style="font-size: 15px;">
+						<f:attribute name="chamadoSelecionado" value="#{chamado}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</p:panel>
+		
+	</h:form>
+
+
+								<!-- Abrir Chamado -->
+	<p:dialog header="Abrir Chamado" widgetVar="abrirChamado"
+		draggable="false" resizable="false" modal="true" closable="false">
+		<h:form id="formAbrirChamado">
+			<h:panelGrid id="painel" columns="2">
+				<p:outputLabel value="Natureza" />
+				<p:selectOneMenu  value="#{chamadoBean.chamado.natureza}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione Natureza do Chamado" />
+					<f:selectItem itemValue="Manutenção de Equipamento" itemLabel="Manutenção de Equipamento" />
+					<f:selectItem itemValue="#{estado}" itemLabel="Criar Usuario" />
+					<f:selectItem itemValue="#{estado}" itemLabel="Configuração de Email" />
+					<f:selectItem itemValue="#{estado}" itemLabel="Selecione uma Natureza" />
+					<f:selectItem itemValue="#{estado}" itemLabel="Selecione uma Natureza" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Descrição:" />
+				<p:inputTextarea rows="10" cols="50"
+				 value="#{chamadoBean.chamado.descricao}" queryDelay="750" minQueryLength="4" />
+				
+				<p:outputLabel value="Funcionario:" />
+				<p:selectOneMenu filter="true" value="#{chamadoBean.chamado.funcionario}"
+					converter="omnifaces.SelectItemsConverter" required = "true" requiredMessage = "Funcionario não selecionado">
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionario" />
+					<f:selectItems value="#{chamadoBean.funcionarios}" var="funcionario"
+						itemValue="#{funcionario}" itemLabel="#{funcionario.nome} - #{funcionario.cpf}" />
+				</p:selectOneMenu>
+				
+				
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<p:commandButton value="Salvar"
+					actionListener="#{chamadoBean.salvar}"
+					update=":mensagem :formAbrirChamado:painel :formListagem:tabelaUsuario" oncomplete="PF('abrirChamado').hide();" />
+				<p:commandButton value="Fechar" oncomplete="PF('abrirChamado').hide();" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+
+
+								<!-- Visualizar Chamado Suporte -->
+	<p:dialog header="Visualizar Chamado" widgetVar="visualizar"
+		draggable="false" resizable="false" modal="true" closable="false">
+		<h:form id="formVisualizarSuporte">
+			<h:panelGrid id="painel" columns="1">
+				<p:outputLabel value="Natureza" />
+				<p:inputText maxlength="50" size="30" readonly="true"
+					value="#{chamadoBean.chamado.natureza}"/>
+				
+				<p:outputLabel value="Descrição" />
+				<p:inputTextarea rows="10" cols="50" readonly="true"
+				 value="#{chamadoBean.chamado.descricao}" queryDelay="750" minQueryLength="4" />
+				
+				<p:outputLabel value="Funcionario" />
+				<p:inputText maxlength="50" size="30" readonly="true"
+					value="#{chamadoBean.chamado.funcionario.nome} - #{chamadoBean.chamado.funcionario.cpf}"/>
+				
+			</h:panelGrid>
+			<p:outputLabel value="Andamento do Chamado:"/>
+			<p:inputSwitch  name="valor" onLabel = "Ativo" offLabel = "Inativo" value ="#{chamadoBean.status}"/>
+			<h:panelGrid columns="2">
+				<p:commandButton value="Concluir" 
+					actionListener="#{chamadoBean.salvarAndamento}"
+					update=":mensagem :formVisualizarSuporte:painel :formListagem:tabelaSuporte" oncomplete="PF('visualizar').hide();" />
+
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+	
+	
+								<!-- Visualizar Chamado Usuario -->
+	<p:dialog header="Visualizar Chamado" widgetVar="visualizarUsuario"
+		draggable="false" resizable="false" modal="true" closable="false">
+		<h:form id="formVisualizarUsuario">
+			<h:panelGrid id="painel" columns="1">
+				<p:outputLabel value="Natureza" />
+				<p:inputText maxlength="50" size="30" readonly="true"
+					value="#{chamadoBean.chamado.natureza}"/>
+				
+				<p:outputLabel value="Descrição" />
+				<p:inputTextarea rows="10" cols="50" readonly="true"
+				 value="#{chamadoBean.chamado.descricao}" queryDelay="750" minQueryLength="4" />
+				</h:panelGrid>
+				
+				<h:panelGrid columns="2">
+				<p:commandButton value="Concluir" 
+					actionListener="#{chamadoBean.salvarAndamento}"
+					update=":mensagem :formVisualizarUsuario:painel :formListagem:tabelaSuporte" oncomplete="PF('visualizarUsuario').hide();" />
+				
+				<p:commandButton value="Encerrar"
+						actionListener="#{chamadoBean.salvar}"
+						update=":mensagem :formListagem:tabelaUsuario" oncomplete="PF('visualizarUsuario').hide();" >
+						<p:confirm header="Confirmação" message="Deseja encerrar o Chamado?"
+							icon="ui-icon-alert" />
+						<f:attribute name="chamadoSelecionado" value="#{chamado}" />
+					</p:commandButton>
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+	
+	
+								<!-- Responder Chamado -->
+	<p:dialog header="Responder Chamado" widgetVar="responder"
+		draggable="false" resizable="false" modal="true" closable="false">
+		<h:form id="formResponder">
+			<h:panelGrid id="painel" columns="1">
+				
+				<p:outputLabel value="Descrição" />
+				<p:inputTextarea rows="10" cols="50" readonly="true"
+				 value="#{chamadoBean.chamado.descricao}" queryDelay="750" minQueryLength="4" />
+				
+				<p:outputLabel value="Suporte" />
+				<p:selectOneMenu filter="true" value="#{chamadoBean.chamado.funcionario}"
+					converter="omnifaces.SelectItemsConverter" required = "true" requiredMessage = "Funcionario não selecionado">
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionario" />
+					<f:selectItems value="#{chamadoBean.funcionarios}" var="funcionario"
+						itemValue="#{funcionario}" itemLabel="#{funcionario.nome} - #{funcionario.cpf}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2">
+				<p:commandButton value="Concluir" 
+					update=":mensagem :formResponder:painel :formListagem:tabelaSuporte" oncomplete="PF('responder').hide();" />
+				<p:commandButton value="Fechar" oncomplete="PF('responder').hide();" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+	
+
+</h:body>
+</html>	

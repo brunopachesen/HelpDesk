@@ -1,4 +1,6 @@
 package br.edu.bsi.helpdesk.domain;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -12,14 +14,18 @@ public class Chamado extends GenericDomain {
 	private String natureza;
 	
 	@Column(length = 50, nullable = false)
-	private short status;
+	private short status = 1;
 
-	@Column(length = 15, nullable = false)
+	@Column(length = 140, nullable = false)
 	private String descricao;
+	
+	@Column(nullable = false)
+	private Date dataAbertura = new Date();
+	
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Usuario usuario;
+	private Funcionario funcionario;
 	
 	public String getNatureza() {
 		return natureza;
@@ -44,16 +50,35 @@ public class Chamado extends GenericDomain {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	
+	
+	public Date getDataAbertura() {
+		return dataAbertura;
+	}
+
+	public void setDataAbertura(Date dataAbertura) {
+		this.dataAbertura = dataAbertura;
+	}
+
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
+
+	public String conversao(){
+		String status = null;
+		if(getStatus() == 1){
+			status = "Aberto";
+		}else if(getStatus() == 2){
+			status = "Andamento";
+		}else if(getStatus() == 3){
+			status = "Encerrado";
+		}
+		return status;
+	}
 	
 	
 }
