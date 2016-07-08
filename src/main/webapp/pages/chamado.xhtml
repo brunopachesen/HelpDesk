@@ -7,6 +7,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
 	<title>Chamado</title>
 </h:head>
 <h:body>
@@ -20,12 +21,15 @@
 								<!-- Listagem do Usuario -->
 								
 								
-		<p:panel header="Chamado - Listagem - Usuario">
+		<p:panel header="Chamado - Listagem" rendered="#{autenticacaoBean.usuarioLogado}" >
 			<p:dataTable id="tabelaUsuario" emptyMessage="Nenhum registro encontrado."
 				paginator="true" value="#{chamadoBean.chamados}" var="chamado" rows="5">
 				<f:facet name="header">
 					<p:commandButton value="Abrir Chamado" oncomplete="PF('abrirChamado').show();"
-						actionListener="#{chamadoBean.novo}" update=":formAbrirChamado:painel" />
+						actionListener="#{chamadoBean.novo}" update=":formAbrirChamado:painel" >
+					<f:attribute name="funcionarioLogado" value="#{autenticacaoBean.funcionarioLogado}" />
+					</p:commandButton>
+					
 				</f:facet>
 				
 				<p:column headerText="Código" sortBy="#{chamado.codigo}"
@@ -70,7 +74,7 @@
 								<!-- Listagem do Suporte -->
 								
 								
-		<p:panel header="Chamado - Listagem - Suporte">
+		<p:panel header="Chamado - Listagem" rendered="#{autenticacaoBean.suporteLogado}">
 			<p:dataTable id="tabelaSuporte" emptyMessage="Nenhum registro encontrado."
 				paginator="true" value="#{chamadoBean.chamados}" var="chamado" rows="5">
 				<f:facet name="header">
@@ -145,13 +149,6 @@
 				<p:inputTextarea rows="10" cols="50"
 				 value="#{chamadoBean.chamado.descricao}" queryDelay="750" minQueryLength="4" />
 				
-				<p:outputLabel value="Funcionario:" />
-				<p:selectOneMenu filter="true" value="#{chamadoBean.chamado.funcionario}"
-					converter="omnifaces.SelectItemsConverter" required = "true" requiredMessage = "Funcionario não selecionado">
-					<f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionario" />
-					<f:selectItems value="#{chamadoBean.funcionarios}" var="funcionario"
-						itemValue="#{funcionario}" itemLabel="#{funcionario.nome} - #{funcionario.cpf}" />
-				</p:selectOneMenu>
 				
 				
 			</h:panelGrid>

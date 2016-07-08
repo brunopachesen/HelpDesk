@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 
 @SuppressWarnings("serial")
@@ -68,6 +69,7 @@ public class Chamado extends GenericDomain {
 		this.funcionario = funcionario;
 	}
 
+	@Transient
 	public String conversao(){
 		String status = null;
 		if(getStatus() == 1){
