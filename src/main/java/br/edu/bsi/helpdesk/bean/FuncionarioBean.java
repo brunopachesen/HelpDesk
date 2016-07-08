@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.omnifaces.util.Messages;
 
 import br.edu.bsi.helpdesk.dao.FuncionarioDAO;
@@ -57,6 +58,8 @@ public class FuncionarioBean implements Serializable{
 	public void salvar(){
 		try {
 			FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+			SimpleHash hash = new SimpleHash("md5", funcionario.getSenha());
+			funcionario.setSenha(hash.toHex());
 			funcionarioDAO.salvar(funcionario);
 
 			funcionario = new Funcionario();

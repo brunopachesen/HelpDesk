@@ -2,6 +2,7 @@ package br.edu.bsi.helpdesk.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 @SuppressWarnings("serial")
 @Entity
@@ -25,7 +26,7 @@ public class Funcionario extends GenericDomain{
 	@Column(length = 50, nullable = false, unique = true)
 	private String login;
 	
-	@Column(length = 50, nullable = false)
+	@Column(length = 32, nullable = false)
 	private String senha;
 	
 	@Column(nullable = false)

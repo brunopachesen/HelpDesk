@@ -13,11 +13,13 @@
 		
 			<p:menubar>
 					<p:menuitem value = "Chamado" url = "chamado.xhtml"/>
-					<p:menuitem value = "Funcionario" url ="funcionario.xhtml"/>
+					<p:menuitem value = "Funcionario" url ="funcionario.xhtml" rendered="#{autenticacaoBean.suporteLogado}"/>
 					<p:menuitem value = "Sobre"/>
 					<p:menuitem value = "Sair"/>
+					
 
 			</p:menubar>
+		
 		</h:form>
 </h:body>
 </html>
