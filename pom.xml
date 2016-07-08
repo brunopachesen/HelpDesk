@@ -94,5 +94,24 @@
 			<artifactId>omnifaces</artifactId>
 			<version>1.11</version>
 		</dependency>
+ 		
+ 		<!-- Apache Commons Email -->
+ 		<dependency>
+    		<groupId>org.apache.commons</groupId>
+    		<artifactId>commons-email</artifactId>
+ 	   		<version>1.4</version>
+		</dependency>
+ 
+ 
+ 		<!-- Criptografia Apache Shiro -->
+ 		
+ 		<dependency>
+  <groupId>org.apache.shiro</groupId>
+  <artifactId>shiro-core</artifactId>
+  <version>1.2.6</version>
+	</dependency>
+ 		
  </dependencies>
+ 
+ 		
 </project>
