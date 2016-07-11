@@ -35,7 +35,7 @@
 		<!-- Mapeamento das entidades -->
 		<mapping class="br.edu.bsi.helpdesk.domain.Funcionario"/>
 		<mapping class="br.edu.bsi.helpdesk.domain.Chamado"/>
-
+		<mapping class="br.edu.bsi.helpdesk.domain.InteracaoChamado"/>
 
 		
 		
