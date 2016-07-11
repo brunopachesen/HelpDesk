@@ -33,6 +33,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Bruno/workWeb/HelpDesk/src/main/resources/mail.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
