@@ -19,8 +19,6 @@
 	<h:form id="formListagem">
 								
 								<!-- Listagem do Usuario -->
-								
-								
 		<p:panel header="Chamado - Listagem" rendered="#{autenticacaoBean.usuarioLogado}" >
 			<p:dataTable id="tabelaUsuario" emptyMessage="Nenhum registro encontrado."
 				paginator="true" value="#{chamadoBean.chamados}" var="chamado" rows="5">
@@ -71,9 +69,10 @@
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 		</p:panel>
-								<!-- Listagem do Suporte -->
-								
-								
+						
+						
+						
+								<!-- Listagem do Suporte -->										
 		<p:panel header="Chamado - Listagem" rendered="#{autenticacaoBean.suporteLogado}">
 			<p:dataTable id="tabelaSuporte" emptyMessage="Nenhum registro encontrado."
 				paginator="true" value="#{chamadoBean.chamados}" var="chamado" rows="5">
@@ -111,9 +110,10 @@
 					</p:commandButton>
 					
 					<p:commandButton value = "Responder"
-						update=":formResponder:painel"
+						actionListener="#{interacaoChamadoBean.novo}"
 						oncomplete="PF('responder').show();" style="font-size: 15px;">
 						<f:attribute name="chamadoSelecionado" value="#{chamado}" />
+						<f:attribute name="funcionarioLogado" value="#{autenticacaoBean.funcionarioLogado}"/>
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
@@ -231,20 +231,15 @@
 			<h:panelGrid id="painel" columns="1">
 				
 				<p:outputLabel value="Descrição" />
-				<p:inputTextarea rows="10" cols="50" readonly="true"
-				 value="#{chamadoBean.chamado.descricao}" queryDelay="750" minQueryLength="4" />
+				<p:inputTextarea rows="10" cols="50" 
+				 value="#{interacaoChamadoBean.interacao.resposta}" queryDelay="750" minQueryLength="4" />
 				
-				<p:outputLabel value="Suporte" />
-				<p:selectOneMenu filter="true" value="#{chamadoBean.chamado.funcionario}"
-					converter="omnifaces.SelectItemsConverter" required = "true" requiredMessage = "Funcionario não selecionado">
-					<f:selectItem noSelectionOption="true" itemLabel="Selecione um funcionario" />
-					<f:selectItems value="#{chamadoBean.funcionarios}" var="funcionario"
-						itemValue="#{funcionario}" itemLabel="#{funcionario.nome} - #{funcionario.cpf}" />
-				</p:selectOneMenu>
+			
 			</h:panelGrid>
 			
 			<h:panelGrid columns="2">
 				<p:commandButton value="Concluir" 
+					actionListener="#{interacaoChamadoBean.salvar}"
 					update=":mensagem :formResponder:painel :formListagem:tabelaSuporte" oncomplete="PF('responder').hide();" />
 				<p:commandButton value="Fechar" oncomplete="PF('responder').hide();" />
 			</h:panelGrid>
