@@ -10,7 +10,7 @@
 	
 	<title>Chamado</title>
 </h:head>
-<h:body>
+<h:body >
 	<p:layoutUnit>
 		<ui:include src="/templates/Menu.xhtml"/>
 	</p:layoutUnit>
@@ -19,9 +19,9 @@
 	<h:form id="formListagem">
 								
 								<!-- Listagem do Usuario -->
-		<p:panel header="Chamado - Listagem" rendered="#{autenticacaoBean.usuarioLogado}" >
+		<p:panel header="Chamado - Listagem" rendered="#{autenticacaoBean.usuarioLogado}">
 			<p:dataTable id="tabelaUsuario" emptyMessage="Nenhum registro encontrado."
-				paginator="true" value="#{chamadoBean.chamados}" var="chamado" rows="5">
+				paginator="true" value="#{chamadoBean.chamados}" var="chamado" rows="5" >
 				<f:facet name="header">
 					<p:commandButton value="Abrir Chamado" oncomplete="PF('abrirChamado').show();"
 						actionListener="#{chamadoBean.novo}" update=":formAbrirChamado:painel" >
@@ -56,6 +56,13 @@
 						update=":formVisualizarUsuario" style="font-size: 15px"
 						oncomplete="PF('visualizarUsuario').show();" >
 						<f:attribute name="chamadoSelecionado" value="#{chamado}" />
+					</p:commandButton>
+					<p:commandButton value = "Responder"
+						actionListener="#{interacaoChamadoBean.novo}"
+						update=":formResponder"
+						oncomplete="PF('responder').show();" style="font-size: 15px;">
+						<f:attribute name="chamadoSelecionado" value="#{chamado}" />
+						<f:attribute name="funcionarioLogado" value="#{autenticacaoBean.funcionarioLogado}"/>
 					</p:commandButton>
 
 				
@@ -111,7 +118,9 @@
 					
 					<p:commandButton value = "Responder"
 						actionListener="#{interacaoChamadoBean.novo}"
+						update=":formResponder"
 						oncomplete="PF('responder').show();" style="font-size: 15px;">
+						
 						<f:attribute name="chamadoSelecionado" value="#{chamado}" />
 						<f:attribute name="funcionarioLogado" value="#{autenticacaoBean.funcionarioLogado}"/>
 					</p:commandButton>
@@ -229,16 +238,20 @@
 		draggable="false" resizable="false" modal="true" closable="false">
 		<h:form id="formResponder">
 			<h:panelGrid id="painel" columns="1">
+				<p:outputLabel value="Mensagem" />
+				<p:inputTextarea rows="10" cols="50" readonly="true"
+				 value="#{interacaoChamadoBean.interacaoAnterior.resposta}" queryDelay="750" minQueryLength="4" />
 				
-				<p:outputLabel value="Descrição" />
-				<p:inputTextarea rows="10" cols="50" 
+				
+				<p:outputLabel value="Resposta" />
+				<p:inputTextarea rows="10" cols="50" readonly="#{interacaoChamadoBean.bloquearResposta}"
 				 value="#{interacaoChamadoBean.interacao.resposta}" queryDelay="750" minQueryLength="4" />
 				
 			
 			</h:panelGrid>
 			
 			<h:panelGrid columns="2">
-				<p:commandButton value="Concluir" 
+				<p:commandButton value="Concluir" rendered="#{interacaoChamadoBean.liberarConcluir}"
 					actionListener="#{interacaoChamadoBean.salvar}"
 					update=":mensagem :formResponder:painel :formListagem:tabelaSuporte" oncomplete="PF('responder').hide();" />
 				<p:commandButton value="Fechar" oncomplete="PF('responder').hide();" />

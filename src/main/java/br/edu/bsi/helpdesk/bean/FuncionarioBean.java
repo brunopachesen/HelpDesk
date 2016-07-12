@@ -11,6 +11,7 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.omnifaces.util.Messages;
 
 import br.edu.bsi.helpdesk.dao.FuncionarioDAO;
+import br.edu.bsi.helpdesk.domain.Chamado;
 import br.edu.bsi.helpdesk.domain.Funcionario;
 
 

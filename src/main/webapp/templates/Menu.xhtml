@@ -14,12 +14,17 @@
 			<p:menubar>
 					<p:menuitem value = "Chamado" url = "chamado.xhtml"/>
 					<p:menuitem value = "Funcionario" url ="funcionario.xhtml" rendered="#{autenticacaoBean.suporteLogado}"/>
-					<p:menuitem value = "Sobre"/>
+					<p:submenu label ="Relatorio">
+						<p:menuitem value = "Chamados" actionListener = "#{chamadoBean.imprimirChamados}"/>
+						<p:menuitem value = "Interações Funcionario" actionListener = "#{chamadoBean.imprimirFuncionarios}" />
+					</p:submenu>
 					<p:menuitem value = "Sair" url = "login.xhtml"/>
 					
 
 			</p:menubar>
-		
 		</h:form>
+		
+		
+		
 </h:body>
 </html>

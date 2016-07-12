@@ -2,6 +2,7 @@ package br.edu.bsi.helpdesk.bean;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Connection;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,11 +10,18 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+
 
 
 
@@ -24,6 +32,7 @@ import br.edu.bsi.helpdesk.dao.ChamadoDAO;
 import br.edu.bsi.helpdesk.dao.FuncionarioDAO;
 import br.edu.bsi.helpdesk.domain.Chamado;
 import br.edu.bsi.helpdesk.domain.Funcionario;
+import br.edu.bsi.helpdesk.util.HibernateUtil;
 
 
 
@@ -84,7 +93,8 @@ public class ChamadoBean implements Serializable {
 		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 		funcionarios = funcionarioDAO.listar();
 }
-@PostConstruct
+
+@PostConstruct	
 public void listar() {
 	try {
 		ChamadoDAO chamadoDAO = new ChamadoDAO();
@@ -94,6 +104,7 @@ public void listar() {
 		erro.printStackTrace();
 	}
 }
+
 
 public void salvar(){
 	try {
@@ -171,5 +182,39 @@ public void enviarEmail() throws EmailException, MalformedURLException{
 	
 }
 
+public void imprimirChamados() {
+	try {
+				
+		// Caminho de acesso ao relatorio
+		String caminho = Faces.getRealPath("resources/Chamado.jasper");
+		
+		// Cria a Conexao
+		Connection conexao = HibernateUtil.getConnection();
+		
+		JasperPrint relatorio = JasperFillManager.fillReport(caminho, null, conexao);
+		
+		JasperPrintManager.printReport(relatorio, true);
+	} catch (JRException erro) {
+		Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatorio");
+		erro.printStackTrace();
+	}
+}
 
+public void imprimirFuncionarios() {
+	try {
+				
+		// Caminho de acesso ao relatorio
+		String caminho = Faces.getRealPath("resources/Funcionario.jasper");
+		
+		// Cria a Conexao
+		Connection conexao = HibernateUtil.getConnection();
+		
+		JasperPrint relatorio = JasperFillManager.fillReport(caminho, null, conexao);
+		
+		JasperPrintManager.printReport(relatorio, true);
+	} catch (JRException erro) {
+		Messages.addGlobalError("Ocorreu um erro ao tentar gerar o relatorio");
+		erro.printStackTrace();
+	}
+}
 }
