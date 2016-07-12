@@ -22,10 +22,14 @@ public class InteracaoChamado extends GenericDomain {
 	@Column(length = 140, nullable = false)
 	private String resposta;
 	
+	public Date getDataInteracao() {
+		return dataInteracao;
+	}
+	public void setDataInteracao(Date dataInteracao) {
+		this.dataInteracao = dataInteracao;
+	}
 	@Column(nullable = false)
-	private Date data = new Date();
-	
-	
+	private Date dataInteracao = new Date();
 	
 	public Chamado getChamado() {
 		return chamado;
@@ -44,11 +48,5 @@ public class InteracaoChamado extends GenericDomain {
 	}
 	public void setResposta(String resposta) {
 		this.resposta = resposta;
-	}
-	public Date getData() {
-		return data;
-	}
-	public void setData(Date data) {
-		this.data = data;
 	}
 }
